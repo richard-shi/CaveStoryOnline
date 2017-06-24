@@ -126,12 +126,15 @@ SDL_AudioSpec fmt;
 		return 1;
 	}
 	
-	if (spec.format != fmt.format || \
-		spec.channels != fmt.channels)
-	{
-		staterr("SS: Failed to obtain the audio format I wanted");
-		return 1;
-	}
+  //staterr("Audio device channels: %d, Desired channels: %d", spec.channels, fmt.channels);
+  //staterr("Audio device format: %d, Desired format: %d", spec.format, fmt.format);
+
+	//if (spec.format != fmt.format ||            \
+	//	spec.channels != fmt.channels)
+	//{
+	//	staterr("SS: Failed to obtain the audio format I wanted");
+	//	return 1;
+	//}
 	
 	mixbuffer = (uint8_t *)malloc(spec.samples * spec.channels * 2);
 	
