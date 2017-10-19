@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 
+set(CMAKE_C_COMPILER "emcc")
+set(CMAKE_CXX_COMPILER "emcc")
 
 include(CheckCXXCompilerFlag)
 
@@ -75,13 +77,11 @@ if(USE_TTF)
     add_definitions(-DCONFIG_ENABLE_TTF)
 endif(USE_TTF)
 
-add_definitions("-Wall -std=c++11 -O2")
-#add_definitions("--preload-file ${ASSET_DIRECTORY}")
-#add_definitions("--embed-file /Users/richardshi/Development/cpp_workspace/engine_test/engine/data")
-add_definitions("-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_LIBPNG=1")
+add_definitions("-Wall -Werror  -std=c++11 -g4 -O2")
+add_definitions("-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_LIBPNG=1 -s ASSERTIONS=1 -s SAFE_HEAP=1")
 
 add_executable(game.html ${SOURCES})
-set_target_properties(game.html PROPERTIES LINK_FLAGS "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_LIBPNG=1 -s TOTAL_MEMORY=67108864 -O2 --preload-file ${ASSET_DIRECTORY}")
+set_target_properties(game.html PROPERTIES LINK_FLAGS "-Werror -s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_LIBPNG=1 -s TOTAL_MEMORY=67108864 -O2 --preload-file ${ASSET_DIRECTORY}")
 
 #target_link_libraries(nx ${SDL2_LIBRARY} ${SDL2TTF_LIBRARY} ${PNG_LIBRARY})
 #add_executable(extract ${EXTR_SOURCES})
