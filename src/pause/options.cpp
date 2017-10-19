@@ -64,7 +64,12 @@ bool options_init(int retmode)
 	opt.xoffset = SLIDE_DIST;
 	opt.dlg->offset(-SLIDE_DIST, 0);
 	
+  stat("Entering main menu...");
+
 	EnterMainMenu();
+
+  stat("Finished entering main menu");
+
 	opt.dlg->ondismiss = DialogDismissed;
 	opt.dlg->ShowFull();
 	
@@ -163,15 +168,18 @@ Dialog *dlg = opt.dlg;
 	
 	dlg->AddItem("Resolution: ", _res_change, _res_get, -1, OD_CHOICE);
 	dlg->AddItem("Fullscreen: ", _fullscreen_change, _fullscreen_get, -1, OD_CHOICE);
+
+  // Something is wrong with this one
+  stat("About to add controls");
 	dlg->AddItem("Controls", EnterControlsMenu);
-	
+  
 	dlg->AddSeparator();
-	
+  
 	dlg->AddItem("Debug Keys: ", _debug_change, _debug_get, -1, OD_CHOICE);
 	dlg->AddItem("Save Slots: ", _save_change, _save_get, -1, OD_CHOICE);
 	
 	dlg->AddSeparator();
-	
+  
 	dlg->AddItem("Music: ", _music_change, _music_get, -1, OD_CHOICE);
 	dlg->AddItem("Sound: ", _sound_change, _sound_get, -1, OD_CHOICE);
 	
@@ -181,6 +189,9 @@ Dialog *dlg = opt.dlg;
 	dlg->SetSelection(opt.mm_cursel);
 	dlg->onclear = LeavingMainMenu;
 	opt.InMainMenu = true;
+
+  stat("Finished adding items to main menu");
+
 }
 
 void LeavingMainMenu()
@@ -194,7 +205,7 @@ void LeavingMainMenu()
 void _res_get(ODItem *item)
 {
 	const gres_t *reslist = Graphics::GetRes();
-	
+
 	if (settings->resolution < 0 || \
 		settings->resolution >= Graphics::GetResCount())
 	{

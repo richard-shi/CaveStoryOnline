@@ -118,6 +118,8 @@ ODItem *Dialog::AddItem(const char *text, \
 						void (*update)(ODItem *),\
 						int id, int type)
 {
+  stat("Creating new item");
+
 	ODItem *item = new ODItem;
 	memset(item, 0, sizeof(ODItem));
 	
@@ -127,8 +129,11 @@ ODItem *Dialog::AddItem(const char *text, \
 	item->update = update;
 	item->id = id;
 	item->type = type;
-	
+
+  stat("Putting item in items vector"); 
 	fItems.push_back(item);
+  
+  stat("Successfully put item in items vector"); 
 	
 	if (update)
 		(*update)(item);
