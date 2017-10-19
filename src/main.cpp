@@ -441,10 +441,10 @@ int main(int argc, char *argv[])
 	fresh_start = true;
 
 	stat("Starting main loop for the first time...");
-  emscripten_set_main_loop(mainloop, -1, 1);
+    emscripten_set_main_loop(mainloop, -1, 1);
 
-  // Not reachable
-  return 1;
+    // Not reachable
+    return 1;
 }
 
 
