@@ -61,7 +61,7 @@ static int32_t nexttick = 0;
 
 static void shutdown(bool error)
 {
-  emscripten_cancel_main_loop();
+  	emscripten_cancel_main_loop();
  	game.close();
 	Carets::close();
 
@@ -287,11 +287,11 @@ void gameloop(void)
 			nexttick = curtime + GAME_WAIT;
 
 			// pause game if window minimized
-      if(!Graphics::WindowVisible())
-        {
-          AppMinimized();
-          nexttick = 0;
-        }
+      // if(!Graphics::WindowVisible())
+      //   {
+      //     AppMinimized();
+      //     nexttick = 0;
+      //   }
 		}
   else
 		{
