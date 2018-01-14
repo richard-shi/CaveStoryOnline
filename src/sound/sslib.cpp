@@ -81,6 +81,8 @@ static void mixaudio(void *unused, uint8_t *stream, int len) {
         }
 
         if(convert.needed){
+            convert.len = len;
+            convert.buf = mixbuffer;
             SDL_ConvertAudio(&convert);
         }
 
@@ -120,6 +122,7 @@ char SSInit(void) {
 
     stat("Audio device channels: %d, Desired channels: %d", spec.channels, fmt.channels);
     stat("Audio device format: %d, Desired format: %d", spec.format, fmt.format);
+    stat("Audio device sample rate: %d, Desired sample rate: %d", spec.freq, fmt.freq);
 
     if (spec.format != fmt.format || spec.channels != fmt.channels) {
         stat("SSLib: Did not detect desired audio format. Initializing converter");
@@ -127,20 +130,20 @@ char SSInit(void) {
 
         // Setup audio converter
         if(SDL_BuildAudioCVT(&convert, fmt.format, fmt.channels, fmt.freq,
-                             spec.format, spec.channels, spec.freq) < 0){
+                             spec.format, spec.channels, spec.freq) < 0){    //Maintain the same sample rate
             staterr("SS: Unable to setup converter");
             return 1;
         }
 
         stat("Successfully setup audio converter");
+        stat("Conversion rate: %d", convert.len_mult);
     }
 
     mixbuffer = (uint8_t *) malloc(spec.samples * spec.channels * 4);
-    //mixbuffer = (uint8_t *) malloc(spec.samples * spec.channels * 2);
 
-    // Setup converter to convert the entire mixbuffer at a time
-    convert.len = spec.samples * spec.channels * 2;
-    convert.buf = mixbuffer;
+    // Setup converter to convert directly on mixbuffer
+    //convert.len = spec.samples * spec.channels * 2;
+    //convert.buf = mixbuffer;
 
     // zero everything in all channels
     memset(channel, 0, sizeof(channel));
